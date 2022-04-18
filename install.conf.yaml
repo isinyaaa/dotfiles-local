@@ -4,3 +4,37 @@
       relink: true
 
 - clean: ['~', '~/.config']
+
+- link:
+    ~/.gitconfig: gitconfig
+    ~/.gitconfig-usp: gitconfig-usp
+    ~/.gitconfig-work: gitconfig-work
+    ~/.gitconfig-common: gitconfig-common
+    ~/.xinitrc: xinitrc
+    ~/.xprofile: xprofile
+    ~/.Xresources: Xresources
+    ~/.wacom: wacom
+    ~/.config/awesome:
+        path: config/awesome/
+    ~/bin:
+        path: bin/
+    ~/vms/setup:
+        path: vms-setup/
+    ~/.config/dunst:
+        path: config/dunst/
+    ~/.config/gtk-3.0/gtk.css:
+        path: config/gtk-3.0/gtk.css
+    ~/.config/herbstluftwm:
+        path: config/herbstluftwm/
+    ~/.config/kitty:
+        path: config/kitty/
+    ~/.config/paru:
+        path: config/paru/
+    ~/.config/picom:
+        path: config/picom/
+    ~/.config/polybar:
+        path: config/polybar/
+    ~/.config/redshift.conf:
+        path: config/redshift.conf
+    ~/.config/rofi:
+        path: config/rofi/
