@@ -4,3 +4,19 @@
       relink: true
 
 - clean: ['~', '~/.config']
+
+- link:
+    ~/.gitconfig: gitconfig
+    ~/.gitconfig-usp: gitconfig-usp
+    ~/.gitconfig-work: gitconfig-work
+    ~/.gitconfig-common: gitconfig-common
+    ~/bin:
+        path: bin/
+    ~/vms/setup:
+        path: vms-setup/
+    ~/.config/kitty:
+        path: config/kitty/
+    ~/.gnupg/gpg.conf:
+        path: gpg.conf
+    ~/.gnupg/gpg-agent.conf:
+        path: gpg-agent.conf
