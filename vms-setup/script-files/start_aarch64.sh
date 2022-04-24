@@ -21,8 +21,12 @@ echo 'export TERM=xterm-256color' > /root/.config/fish/config.fish
 useradd -mg users -G wheel user
 echo 'user:meow' | chpasswd
 chsh -s "$(which fish)" user
-runuser -l user -c 'mkdir -p /home/user/.config/fish'
-runuser -l user -c 'echo "export TERM=xterm-256color" > /home/user/.config/fish/config.fish'
+
+# setup fish
+runuser -l user -c 'mkdir -p /home/user/.config/fish && echo "export TERM=xterm-256color" > /home/user/.config/fish/config.fish'
+# setup paru
+runuser -l user -c 'rustup default stable && git clone https://aur.archlinux.org/paru && cd paru && makepkg -fsri --noconfirm && cd .. && rm -rf paru'
+runuser -l user -c 'paru -Fy'
 
 # setup samba sharing
 echo '[Unit]
@@ -34,7 +38,7 @@ Wants=network-online.target
 [Mount]
 What=//10.0.2.4/qemu
 Where=/home/user/shared
-Options=vers=3.0,x-systemd.automount,_netdev,x-systemd.device-timeout=10,uid=1000,noperm,credentials=/root/.cifs
+Options=vers=3.0,x-systemd.automount,_netdev,x-systemd.device-timeout=10,uid=1001,gid=984,credentials=/root/.cifs,soft,rsize=8192,wsize=8192,mfsymlinks,noperm
 Type=cifs
 TimeoutSec=30
 
@@ -70,7 +74,7 @@ runuser -l user -c 'cat id_ed25519.pub > /home/user/.ssh/authorized_keys'
 
 # fill the fstab
 #echo "#shared_folder /home/user/codes 9p trans=virtio 0 0" >> /etc/fstab
-echo "//10.0.2.4/qemu         /home/user/shared  cifs    uid=1000,credentials=/root/.cifs,mfsymlinks,x-systemd.automount,noperm 0 0" >> /etc/fstab
+echo "//10.0.2.4/qemu         /home/user/shared  cifs    vers=3.0,x-systemd.automount,uid=1001,gid=984,noperm,credentials=/root/.cifs,soft,rsize=8192,wsize=8192,mfsymlinks 0 0" >> /etc/fstab
 
 systemctl enable sshd smb home-user-shared.mount
 

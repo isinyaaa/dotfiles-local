@@ -19,8 +19,12 @@ build() {
 	    docker build -t alarm_build:latest .
 	    docker ps -a | grep -q alarm && docker rm alarm
 	    docker run --name=alarm --privileged -it -v "$HOME"/vms:/images alarm_build ./setup_arch.sh "$img_size" "$img_name.img" -d
+	else
+	    if [[ -f "$HOME/vms/$img_name.qcow2" ]]; then
+		rm -f "$HOME/vms/$img_name.qcow2"
+	    fi
 	fi
-	qemu-img convert -O qcow2 "$HOME"/vms/{"$img_name.img","$img_name.qcow2"}
+	qemu-img convert -O qcow2 "$HOME/vms/"{"$img_name.img","$img_name.qcow2"}
 	[ -e UEFI/flash0.img ] || (
 	    cd UEFI
 	    wget "https://raw.githubusercontent.com/qemu/qemu/master/pc-bios/edk2-aarch64-code.fd.bz2"

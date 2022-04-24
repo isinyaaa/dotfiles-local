@@ -54,6 +54,8 @@ UUID=$rootuuid	/	ext4	defaults	0 0" > /mnt/etc/fstab
 
     umount /mnt/boot
     umount /mnt
+    e2fsck -f "$rootvol"
+    resize2fs "$rootvol"
     kpartx -d "$disk_name"
     sync
     mv "$disk_name" images/
