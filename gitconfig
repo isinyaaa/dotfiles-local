@@ -47,5 +47,13 @@
 [mergetool "vscodium"]
     cmd = vscodium --wait \"$MERGED\"
 [alias]
+    br = branch -vv
+    st = status -sb
+    cs = commit -s
+    ca = commit --amend
+    can = commit --amend --no-edit
+    line = log --oneline --graph
+    top = rev-parse --show-toplevel
+    save = commit -m "Save" --no-gpg-sign --no-verify
     save-staged = "!bash -c \"git stash --keep-index; git stash push -m \"staged\" --keep-index; git stash pop stash@{1}\""
     stash-staged = "!bash -c \"git save-staged; git commit -m \"temp\"; git stash; git reset --hard HEAD^; git stash pop\""
