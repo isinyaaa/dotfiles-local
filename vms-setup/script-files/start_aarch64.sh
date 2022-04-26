@@ -23,7 +23,7 @@ echo 'user:meow' | chpasswd
 chsh -s "$(which fish)" user
 
 # setup fish
-runuser -l user -c 'mkdir -p /home/user/.config/fish && echo "export TERM=xterm-256color" > /home/user/.config/fish/config.fish'
+runuser -l user -c 'mkdir -p /home/user/.config/fish && printf "%s\n" "export TERM=xterm-256color\nset -gx PATH $HOME/bin $PATH" > /home/user/.config/fish/config.fish'
 # setup paru
 runuser -l user -c 'rustup default stable && git clone https://aur.archlinux.org/paru && cd paru && makepkg -fsri --noconfirm && cd .. && rm -rf paru'
 runuser -l user -c 'paru -Fy'
@@ -63,7 +63,7 @@ ExecStart=
 ExecStart=-/usr/bin/agetty --autologin root --noclear %I $TERM' >> "/etc/systemd/system/serial-getty@.service.d/override.conf"
 
 runuser -l user -c 'mkdir /home/user/.ssh'
-runuser -l user -c 'cat id_ed25519.pub > /home/user/.ssh/authorized_keys'
+runuser -l user -c 'cat id_*.pub > /home/user/.ssh/authorized_keys'
 
 {
     echo '%wheel ALL=(ALL) NOPASSWD: ALL'

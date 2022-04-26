@@ -60,5 +60,3 @@ UUID=$rootuuid	/	ext4	defaults	0 0" > /mnt/etc/fstab
     sync
     mv "$disk_name" images/
 }
-
-main "$@"
