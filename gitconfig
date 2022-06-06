@@ -11,11 +11,13 @@
 [includeIf "gitdir:~/repos/usp/"]
     path = ~/.gitconfig-usp
 [credential]
-	helper = !pass-git-helper $@
+    helper = !pass-git-helper $@
 [init]
     defaultBranch = main
 [format]
     signOff = true
+[push]
+    gpgSign = if-asked
 [commit]
     gpgSign = true
 [color]
@@ -53,7 +55,27 @@
     ca = commit --amend
     can = commit --amend --no-edit
     line = log --oneline --graph
-    top = rev-parse --show-toplevel
+    pf = push -f
+    ri = rebase -i
+    rh = reset --hard
     save = commit -m "Save" --no-gpg-sign --no-verify
-    save-staged = "!bash -c \"git stash --keep-index; git stash push -m \"staged\" --keep-index; git stash pop stash@{1}\""
-    stash-staged = "!bash -c \"git save-staged; git commit -m \"temp\"; git stash; git reset --hard HEAD^; git stash pop\""
+    save-staged = "!f(){\
+            git stash --keep-index; \
+            git stash push -m \"staged\" --keep-index; \
+            git stash pop stash@{1}; \
+        };f"
+    stash-staged = "!f(){\
+            git save-staged; \
+            git commit -m \"temp\"; \
+            git stash; \
+            git reset --hard HEAD^; \
+            git stash pop; \
+        };f"
+    top = rev-parse --show-toplevel
+    update = "!f(){\
+            git stash --keep-index; \
+            git checkout $1; \
+            git pull ${2:-origin} $1; \
+            git checkout -; \
+            git stash pop; \
+        };f"
