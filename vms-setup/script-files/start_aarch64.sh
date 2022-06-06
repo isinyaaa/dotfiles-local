@@ -38,7 +38,7 @@ Wants=network-online.target
 [Mount]
 What=//10.0.2.4/qemu
 Where=/home/user/shared
-Options=vers=3.0,x-systemd.automount,_netdev,x-systemd.device-timeout=10,uid=1001,gid=984,credentials=/root/.cifs,soft,rsize=8192,wsize=8192,mfsymlinks,noperm
+Options=vers=3.0,x-systemd.automount,_netdev,x-systemd.device-timeout=10,uid=1001,gid=984,credentials=/root/.cifs,soft,rsize=130048,wsize=130048,mfsymlinks,noperm
 Type=cifs
 TimeoutSec=30
 
@@ -74,7 +74,7 @@ runuser -l user -c 'cat id_*.pub > /home/user/.ssh/authorized_keys'
 
 # fill the fstab
 #echo "#shared_folder /home/user/codes 9p trans=virtio 0 0" >> /etc/fstab
-echo "//10.0.2.4/qemu         /home/user/shared  cifs    vers=3.0,x-systemd.automount,uid=1001,gid=984,noperm,credentials=/root/.cifs,soft,rsize=8192,wsize=8192,mfsymlinks 0 0" >> /etc/fstab
+echo "//10.0.2.4/qemu         /home/user/shared  cifs    vers=3.0,x-systemd.automount,uid=1001,gid=984,noperm,credentials=/root/.cifs,soft,rsize=130048,wsize=130048,mfsymlinks 0 0" >> /etc/fstab
 
 systemctl enable sshd smb home-user-shared.mount
 

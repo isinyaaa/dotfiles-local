@@ -1,21 +1,30 @@
 #!/usr/bin/env bash
 
 main() {
-    if [ "$BUILD" = true ]; then
-	if [ "$IS_MAC" = true ]; then
-	    if [ "$TARGET" = aarch64 ]; then
+    if [ "$IS_MAC" = true ]; then
+	if [ "$TARGET" = aarch64 ]; then
+	    if [ "$BUILD" = true ]; then
 		build_aarch64
-	    # elif [[ "$TARGET" =~ x86 ]]; then
-	    else
-		echo "No rules to make target! Aborting..."
+	    elif [ "$RESIZE" = true ]; then
+		resize_aarch64
+	    fi
+	# elif [[ "$TARGET" =~ x86 ]]; then
+	else
+	    echo "No rules to make target! Aborting..."
+	fi
+    else
+	if [[ "$TARGET" =~ x86 ]]; then
+	    if [ "$BUILD" = true ]; then
+		build_x86_64
+	    fi
+	elif [[ "$TARGET" =~ aarch64 ]]; then
+	    if [ "$BUILD" = true ]; then
+		build_aarch64
+	    elif [ "$RESIZE" = true ]; then
+		resize_aarch64
 	    fi
 	else
-	    if [[ "$TARGET" =~ x86 ]]; then
-		build_x86_64
-	    # elif [[ "$TARGET" =~ x86 ]]; then
-	    else
-		echo "No rules to make target! Aborting..."
-	    fi
+	    echo "No rules to make target! Aborting..."
 	fi
     fi
 }
@@ -70,7 +79,7 @@ build_aarch64() {
 	if [[ "$RECYCLE" != true || ! -f "$HOME/vms/$img_name.img" ]]; then
 	    docker build -t alarm_build:latest .
 	    docker ps -a | grep -q alarm && docker rm alarm
-	    docker run --name=alarm --privileged -it -v "$HOME"/vms:/images alarm_build ./setup_arch.sh "$img_size" "$img_name.img" -d
+	    docker run --name=alarm --privileged -it -v "$HOME"/vms:/images alarm_build ./docker_script.sh "$img_size" "$img_name.img" -d
 	else
 	    if [[ -f "$HOME/vms/$img_name.qcow2" ]]; then
 		rm -f "$HOME/vms/$img_name.qcow2"
@@ -89,15 +98,34 @@ build_aarch64() {
     )
 }
 
+resize_aarch64() {
+    set -e
+    set -x
+    (
+	cd "$HOME"/vms/setup
+	if [[ -f "$HOME/vms/$img_name.qcow2" ]]; then
+	    qemu-img convert -O raw "$HOME/vms/$img_name."{qcow2,img}
+	elif [[ ! -f "$HOME/vms/$img_name.img" ]]; then
+	    echo "No target to resize! Aborting..."
+	    exit 1
+	fi
+	docker build -t alarm_build:latest .
+	docker ps -a | grep -q alarm && docker rm alarm
+	docker run --name=alarm --privileged -it -v "$HOME"/vms:/images alarm_build ./docker_script.sh --resize "$img_size" "$img_name.img" -d
+	qemu-img convert -O qcow2 "$HOME/vms/$img_name."{img,qcow2}
+    )
+}
+
 BUILD=false
 RECYCLE=false
+RESIZE=false
 if [ "$IS_MAC" = true ]; then
     TARGET=aarch64
 else
     TARGET=x86
 fi
 img_name=new_arch
-img_size=10G
+img_size=32G
 
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
@@ -114,6 +142,10 @@ while [[ "$#" -gt 0 ]]; do
 		TARGET="$2"
 	    fi
 	    shift 2
+	    ;;
+	--resize)
+	    RESIZE=true
+	    shift
 	    ;;
 	*)
 	    if [[ "$1" =~ \d*[MG] ]]; then

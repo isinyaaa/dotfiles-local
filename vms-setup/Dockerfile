@@ -5,10 +5,10 @@ MAINTAINER Isabella Basso (isabbasso@riseup.net)
 VOLUME /images
 COPY ./script-files/* .
 COPY ./iso-files/ArchLinuxARM-aarch64-latest.tar.gz .
-RUN chmod +x setup_arch.sh
+RUN chmod +x docker_script.sh
 RUN apt-get update -y
 RUN echo "America/Sao_Paulo" > /etc/timezone
 RUN ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 RUN apt-get install -y kpartx dosfstools libarchive-tools gdisk
 #ENTRYPOINT ["bash"]
-CMD ["./setup_arch.sh", "10G", "new_arch"]
+CMD ["./docker_script.sh", "10G", "new_arch"]
