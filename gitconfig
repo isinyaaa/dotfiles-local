@@ -4,6 +4,7 @@
     confirm = auto
     smtpEncryption = ssl
     smtpServerPort = 465
+    chainReplyTo = false
 [include]
     path = ~/.gitconfig-common
 [includeIf "gitdir:~/repos/redhat/"]
@@ -54,10 +55,15 @@
     cs = commit -s
     ca = commit --amend
     can = commit --amend --no-edit
+    cpf = "!f() {\
+            git can && git pf; \
+        };f"
     line = log --oneline --graph
+    lineno = log --oneline --graph --name-only
     pf = push -f
     ri = rebase -i
     rh = reset --hard
+    rv = remote -v
     save = commit -m "Save" --no-gpg-sign --no-verify
     save-staged = "!f(){\
             git stash --keep-index; \
@@ -73,11 +79,18 @@
         };f"
     top = rev-parse --show-toplevel
     update = "!f(){\
+            before=$(git stash list | wc -l) \
             git stash --keep-index; \
+            after=$(git stash list | wc -l) \
             git checkout $1; \
-            git pull ${2:-origin} $1; \
+            git fetch --all; \
+            tracking=${2:-origin}; \
+            git pull $tracking $1; \
             git checkout -; \
-            git stash pop; \
+            git rebase $tracking/$1; \
+            ret=$?; \
+            test $ret -eq 0 || return $ret; \
+            test $before = $after || git stash pop; \
         };f"
 [gpg]
     program = /opt/homebrew/bin/gpg
