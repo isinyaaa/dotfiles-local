@@ -6,10 +6,9 @@
 - clean: ['~', '~/.config']
 
 - link:
-    ~/.gitconfig: gitconfig
+    ~/.gitconfig-common: gitconfig-common
     ~/.gitconfig-usp: gitconfig-usp
     ~/.gitconfig-work: gitconfig-work
-    ~/.gitconfig-common: gitconfig-common
     ~/bin:
         path: bin/
     ~/vms/setup:

@@ -4,3 +4,5 @@
 [sendemail]
     smtpServer = mail.riseup.net
     smtpUser = isabbasso
+[gpg]
+    program = /opt/homebrew/bin/gpg
