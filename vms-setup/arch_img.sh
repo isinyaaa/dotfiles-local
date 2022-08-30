@@ -78,14 +78,13 @@ build_aarch64() {
     set -x
     (
 	cd "$HOME"/vms/setup
-	if [[ "$RECYCLE" != true || ! -f "$HOME/vms/$img_name.img" ]]; then
+	if [[ -f "$HOME/vms/$img_name.qcow2" ]]; then
+	    rm -f "$HOME/vms/$img_name.qcow2"
+	fi
+	if [[ "$RECYCLE" == false || ! -f "$HOME/vms/$img_name.img" ]]; then
 	    docker build -t alarm_build:latest .
 	    docker ps -a | grep -q alarm && docker rm alarm
-	    docker run --name=alarm --privileged -it -v "$HOME"/vms:/images alarm_build ./docker_script.sh "$img_size" "$img_name.img" -d
-	else
-	    if [[ -f "$HOME/vms/$img_name.qcow2" ]]; then
-		rm -f "$HOME/vms/$img_name.qcow2"
-	    fi
+	    docker run --name=alarm --privileged --rm -it -v "$HOME"/vms:/images alarm_build ./docker_script.sh "$img_size" "$img_name.img" -d
 	fi
 	qemu-img convert -O qcow2 "$HOME/vms/"{"$img_name.img","$img_name.qcow2"}
 	[ -e UEFI/flash0.img ] || (
@@ -113,7 +112,7 @@ resize_aarch64() {
 	fi
 	docker build -t alarm_build:latest .
 	docker ps -a | grep -q alarm && docker rm alarm
-	docker run --name=alarm --privileged -it -v "$HOME"/vms:/images alarm_build ./docker_script.sh --resize "$img_size" "$img_name.img" -d
+	docker run --name=alarm --privileged --rm -it -v "$HOME"/vms:/images alarm_build ./docker_script.sh --resize "$img_size" "$img_name.img" -d
 	qemu-img convert -O qcow2 "$HOME/vms/$img_name."{img,qcow2}
     )
 }

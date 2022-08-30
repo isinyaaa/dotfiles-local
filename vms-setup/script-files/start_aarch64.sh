@@ -4,9 +4,13 @@
 pacman-key --init
 pacman-key --populate archlinuxarm
 
+echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+sed -i 's,#\(en_US.*\),\1,' /etc/locale.gen
+locale-gen
+
 # download packages
 sed -i 's,#Parallel.*,ParallelDownloads = 30,' /etc/pacman.conf
-pacman -Syu efibootmgr git rustup bc fish base-devel sudo vim openssh samba strace gdb cifs-utils ranger --noconfirm
+pacman -Syu efibootmgr git rustup bc fish base-devel sudo vim openssh samba strace gdb cifs-utils ranger neovim python-pip ccache inetutils rsync --noconfirm
 
 # setup bootloader
 uuid=$(blkid /dev/sda2 -s UUID | sed 's,.*="\(.*\)",\1,')
@@ -22,11 +26,17 @@ useradd -mg users -G wheel user
 echo 'user:meow' | chpasswd
 chsh -s "$(which fish)" user
 
-# setup fish
-runuser -l user -c 'mkdir -p /home/user/.config/fish && printf "%s\n" "export TERM=xterm-256color\nset -gx PATH $HOME/bin $PATH" > /home/user/.config/fish/config.fish'
 # setup paru
-runuser -l user -c 'rustup default stable && git clone https://aur.archlinux.org/paru && cd paru && makepkg -fsri --noconfirm && cd .. && rm -rf paru'
-runuser -l user -c 'paru -Fy'
+runuser -l user -c 'rustup default stable && git clone https://aur.archlinux.org/paru && cd paru && makepkg -fsri --noconfirm && cd .. && rm -rf paru && paru -Fy'
+
+paru -S neovim pass-git-helper
+
+# setup dotfiles
+runuser -l user -c 'curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish'
+runuser -l user -c 'git clone --recursive https://github.com/isinyaaa/dotfiles .dotfiles && cd .dotfiles && ./install'
+runuser -l user -c 'git clone --recursive https://github.com/isinyaaa/dotfiles-local .ldotfiles && cd .ldotfiles && git checkout arch && ./install'
+
+runuser -l user -c 'pip install b4'
 
 # setup samba sharing
 echo '[Unit]
