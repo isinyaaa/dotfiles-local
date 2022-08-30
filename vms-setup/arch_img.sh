@@ -7,6 +7,8 @@ main() {
 		build_aarch64
 	    elif [ "$RESIZE" = true ]; then
 		resize_aarch64
+	    elif [ "$RUN" = true ]; then
+		run_aarch64
 	    fi
 	# elif [[ "$TARGET" =~ x86 ]]; then
 	else
@@ -116,9 +118,35 @@ resize_aarch64() {
     )
 }
 
+run_aarch64() {
+    mem_amount=4G
+    if [ "$IS_MAC" = true ]; then
+        cpuvar=host
+        accelvar=",accel=hvf"
+    else
+        cpuvar="cortex-a72"
+    fi
+
+    eval qemu-system-aarch64 -L ~/bin/qemu/share/qemu \
+         -smp 8 \
+         -machine virt"$accelvar" \
+         -cpu "$cpuvar" -m "$mem_amount" \
+         "-drive if=pflash,media=disk,file=$HOME/vms/setup/UEFI/flash"{"0.img,id=drive0","1.img,id=drive1"}",cache=writethrough,format=raw" \
+         -drive if=none,file="$HOME/vms/$img_name",format=qcow2,id=hd0 \
+         -device virtio-scsi-pci,id=scsi0 \
+         -device scsi-hd,bus=scsi0.0,drive=hd0,bootindex=1 \
+         -nic user,model=virtio-net-pci,hostfwd=tcp::2222-:22,smb="$HOME"/shared \
+         '-device virtio-'{rng,balloon,keyboard,mouse,serial,tablet}-device \
+         -object cryptodev-backend-builtin,id=cryptodev0 \
+         -device virtio-crypto-pci,id=crypto0,cryptodev=cryptodev0 \
+         -nographic
+
+}
+
 BUILD=false
 RECYCLE=false
 RESIZE=false
+RUN=false
 if [ "$IS_MAC" = true ]; then
     TARGET=aarch64
 else
@@ -142,6 +170,10 @@ while [[ "$#" -gt 0 ]]; do
 		TARGET="$2"
 	    fi
 	    shift 2
+	    ;;
+	--run)
+	    RUN=true
+	    shift
 	    ;;
 	--resize)
 	    RESIZE=true
