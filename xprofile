@@ -1,58 +1,36 @@
-#!/bin/sh
+# Load Xresources
+xrdb -load ~/.Xresources
 
-userresources=$HOME/.Xresources
-usermodmap=$HOME/.Xmodmap
-sysresources=/etc/X11/xinit/.Xresources
-sysmodmap=/etc/X11/xinit/.Xmodmap
+#/etc/X11/xinit/xinitrc.d/50-systemd-user.sh &
 
-# merge in defaults and keymaps
+.config/herbstluftwm/scripts/xrandr.sh --dual-monitors
 
-if [ -f $sysresources ]; then
+# set mic vol
+pactl set-source-volume @DEFAULT_SOURCE@ 70%
 
-
-
-
-
-
-
-    xrdb -merge $sysresources
-
-fi
-
-if [ -f $sysmodmap ]; then
-    xmodmap $sysmodmap
-fi
-
-if [ -f "$userresources" ]; then
-
-
-
-
-
-
-
-    xrdb -merge "$userresources"
-
-fi
-
-if [ -f "$usermodmap" ]; then
-    xmodmap "$usermodmap"
-fi
-
-# start some nice programs
-
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
- for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-  [ -x "$f" ] && . "$f"
- done
- unset f
-fi
-
+# Start compositor
+pgrep picom && killall picom && sleep 2
 picom --experimental-backends -b
+#pipewire &
 #pulseeffects &
-xset r rate 200 30
-xset s off -dpms
-redshift-gtk &
-nm-applet -b &
-discord &
-exec awesome
+
+xset r rate 200 20
+xinput set-prop 10 359 0, 1
+xset s 600 120 -dpms
+xss-lock -- i3lock-fancy-rapid 5 3 -n &
+#xset s off -dpms
+
+# start some stuff
+pgrep redshift && killall redshift && sleep 2
+redshift &
+
+#nm-applet -b &
+#systemctl restart bluetoothctl &
+if test $(hostname) = "aehse"; then
+    discord &
+    ferdi &
+fi
+telegram-desktop &
+
+#rescrobbled > $HOME/output 2>&1 &
+#discordrp-mpris &
