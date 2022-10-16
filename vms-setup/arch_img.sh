@@ -84,7 +84,7 @@ build_aarch64() {
 	if [[ "$RECYCLE" == false || ! -f "$HOME/vms/$img_name.img" ]]; then
 	    docker build -t alarm_build:latest .
 	    docker ps -a | grep -q alarm && docker rm alarm
-	    docker run --name=alarm --privileged --rm -it -v "$HOME"/vms:/images alarm_build ./docker_script.sh "$img_size" "$img_name.img" -d
+	    docker run --name=alarm --privileged --rm -it -v "$HOME"/vms:/images alarm_build ./docker_script.sh "$img_size" "$img_name.img"
 	fi
 	qemu-img convert -O qcow2 "$HOME/vms/"{"$img_name.img","$img_name.qcow2"}
 	[ -e UEFI/flash0.img ] || (
@@ -95,7 +95,7 @@ build_aarch64() {
 	    truncate -s 64M flash1.img
 	    dd if=edk2-aarch64-code.fd of=flash0.img conv=notrunc
 	)
-	./new_vm.ext "$img_name.qcow2"
+	./new_vm.ext "$img_name"
     )
 }
 
@@ -131,7 +131,7 @@ run_aarch64() {
          -machine virt"$accelvar" \
          -cpu "$cpuvar" -m "$mem_amount" \
          "-drive if=pflash,media=disk,file=$HOME/vms/setup/UEFI/flash"{"0.img,id=drive0","1.img,id=drive1"}",cache=writethrough,format=raw" \
-         -drive if=none,file="$HOME/vms/$img_name",format=qcow2,id=hd0 \
+         -drive if=none,file="$HOME/vms/$img_name.qcow2",format=qcow2,id=hd0 \
          -device virtio-scsi-pci,id=scsi0 \
          -device scsi-hd,bus=scsi0.0,drive=hd0,bootindex=1 \
          -nic user,model=virtio-net-pci,hostfwd=tcp::2222-:22,smb="$HOME"/shared \
