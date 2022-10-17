@@ -79,11 +79,10 @@ user = {
     terminal = "kitty -1",
     floating_terminal = "kitty -1",
     browser = "brave",
-    file_manager = "kitty -1 --class files -e ranger",
-    editor = "kitty -1 --class editor -e vim",
-    email_client = "kitty -1 --class email -e neomutt",
-    music_client = "kitty -o font_size=12 --class music -e ncmpcpp",
-    music_client_spot = "kitty -o font_size=12 --class music_spot -e ncspot",
+    file_manager = "kitty -1 --class files ranger",
+    editor = "kitty -1 --class editor nvim",
+    email_client = "kitty -1 --class email neomutt",
+    music_client = "kitty -1 -o font_size=12 --class music ncspot",
 
     -- >> Web Search <<
     web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
@@ -94,14 +93,14 @@ user = {
 
     -- Directories with fallback values
     dirs = {
-        downloads = os.getenv("XDG_DOWNLOAD_DIR") or "~/Downloads",
-        documents = os.getenv("XDG_DOCUMENTS_DIR") or "~/Documents",
-        music = os.getenv("XDG_MUSIC_DIR") or "~/Music",
-        pictures = os.getenv("XDG_PICTURES_DIR") or "~/Pictures",
-        videos = os.getenv("XDG_VIDEOS_DIR") or "~/Videos",
+        downloads = os.getenv("XDG_DOWNLOAD_DIR") or "~/downloads",
+        documents = os.getenv("XDG_DOCUMENTS_DIR") or "~/documents",
+        music = os.getenv("XDG_MUSIC_DIR") or "~/music",
+        pictures = os.getenv("XDG_PICTURES_DIR") or "~/pictures",
+        videos = os.getenv("XDG_VIDEOS_DIR") or "~/videos",
         -- Make sure the directory exists so that your screenshots
         -- are not lost
-        screenshots = os.getenv("XDG_SCREENSHOTS_DIR") or "~/Pictures/Screenshots",
+        screenshots = os.getenv("XDG_SCREENSHOTS_DIR") or "~/pictures/screenshots",
     },
 
     -- >> Sidebar <<
@@ -128,8 +127,8 @@ user = {
     -- Get your key and find your city id at
     -- https://openweathermap.org/
     -- (You will need to make an account!)
-    openweathermap_key = "",
-    openweathermap_city_id = "",
+    openweathermap_key = "13b58965a26ae710e5c36c6353b1bd9e",
+    openweathermap_city_id = "3448439",
     -- > Use "metric" for Celcius, "imperial" for Fahrenheit
     weather_units = "metric",
 
@@ -474,14 +473,12 @@ awful.rules.rules = {
                 "discord",
 		"whatsapp-nativefier-d40211",
                 "music",
-		"music_spot",
                 "markdown_input",
                 "scratchpad",
 		"ferdi"
             },
             instance = {
                 "music",
-		"music_spot",
                 "markdown_input",
                 "scratchpad",
             },
@@ -541,7 +538,7 @@ awful.rules.rules = {
                 "dialog",
             },
 	    class = {
-	    	"music_spot",
+	    	"music",
 	    },
             role = {
                 "conversation",
@@ -708,11 +705,9 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "music",
-		"music_spot",
             },
             instance = {
                 "music",
-		"music_spot",
             },
         },
         properties = {

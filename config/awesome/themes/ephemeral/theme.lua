@@ -41,18 +41,18 @@ theme.fg_urgent     = x.color3
 theme.fg_minimize   = x.color8
 
 -- Gaps
-theme.useless_gap   = dpi(5)
+theme.useless_gap   = dpi(2)
 -- This could be used to manually determine how far away from the
 -- screen edge the bars / notifications should be.
-theme.screen_margin = dpi(10)
+theme.screen_margin = dpi(1)
 
 -- Borders
-theme.border_width  = dpi(2)
+theme.border_width  = dpi(1)
 -- theme.border_color = x.color0
 theme.border_normal = x.background
 theme.border_focus  = x.background
 -- Rounded corners
-theme.border_radius = dpi(6)
+theme.border_radius = dpi(7)
 
 -- Titlebars
 -- (Titlebar items can be customized in titlebars.lua)

@@ -99,11 +99,6 @@ apps.music = function ()
     helpers.scratchpad({instance = "music"}, user.music_client)
 end
 
-apps.music_spot = function ()
-    helpers.scratchpad({instance = "music_spot"}, user.music_client_spot)
-end
-
-
 apps.process_monitor = function ()
     helpers.run_or_raise({instance = 'htop'}, false, user.terminal.." --class htop -e htop", { switchtotag = true })
 end

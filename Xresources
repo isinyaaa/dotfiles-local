@@ -6,7 +6,7 @@
 ! ╚═╝░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝░╚═════╝░░╚═════╝░╚═╝░░╚═╝░╚═════╝╚══════╝╚══════╝
 !
 ! -----------------------------------
-Xft.dpi: 110
+Xft.dpi: 130
 !Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true
@@ -15,13 +15,9 @@ Xft.autohint: false
 Xft.hintstyle: hintfull
 Xft.lcdfilter: lcddefault
 
-xcursor.theme:            Vanilla-DMZ
-xscreensaver.fade:   false
+xcursor.theme: Vanilla-DMZ
+xscreensaver.fade: false
 xscreensaver.unfade: false
-! ===== urxvt =====
-URxvt.scrollBar: off
-URxvt.font: xft:monospace:size=12
-URxvt.internalBorder:     22
 ! =================
 *background:	#1D1F28
 *foreground:	#FDFDFD

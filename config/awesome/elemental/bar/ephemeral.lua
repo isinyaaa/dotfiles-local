@@ -95,31 +95,17 @@ awesome.connect_signal("evil::microphone", function(muted)
     end
 end)
 
-local music_spot = create_button("", x.color4, x.color8.."40", x.color8.."60")
-
-music_spot:buttons(gears.table.join(
-    awful.button({ }, 1, apps.music_spot),
-    awful.button({ }, 3, apps.music_spot)
-    -- Scrolling: Adjust mpd volume
-    --awful.button({ }, 4, function ()
-    --    awful.spawn.with_shell("mpc volume +5")
-    --end),
-    --awful.button({ }, 5, function ()
-    --    awful.spawn.with_shell("mpc volume -5")
-    --end)
-))
-
-local music = create_button("", x.color1, x.color8.."40", x.color8.."60")
+local music = create_button("", x.color4, x.color8.."40", x.color8.."60")
 
 music:buttons(gears.table.join(
     awful.button({ }, 1, apps.music),
     awful.button({ }, 3, apps.music),
-    --Scrolling: Adjust mpd volume
+    --Scrolling: Adjust music volume
     awful.button({ }, 4, function ()
-        awful.spawn.with_shell("mpc volume +5")
+        awful.spawn.with_shell("playerctl -p ncspot volume 0.05+")
     end),
     awful.button({ }, 5, function ()
-        awful.spawn.with_shell("mpc volume -5")
+        awful.spawn.with_shell("playerctl -p ncspot volume 0.05-")
     end)
 ))
 
@@ -334,7 +320,7 @@ awful.screen.connect_for_each_screen(function(s)
         {
             volume,
             --microphone,
-            music_spot,
+            music,
             exit,
             layout = wibox.layout.fixed.horizontal
         },
