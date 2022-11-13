@@ -4,4 +4,5 @@
 	ignore = dirty
 [submodule "config/awesome/lain"]
 	path = config/awesome/lain
-	url = https://github.com/lcpz/lain
+	url = https://github.com/isinyaaa/lain
+	branch = music-update
