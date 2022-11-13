@@ -6,7 +6,7 @@ local awful = require("awful")
 local update_interval = 15
 local temp_script = [[
   sh -c "
-  sensors | grep Package | awk '{print $4}' | cut -c 2-3
+  sensors | grep Tctl | awk '{print $2}' | cut -c 2-3
   "]]
 
 -- Periodically get temperature info
