@@ -160,16 +160,16 @@ keys.globalkeys = gears.table.join(
         {description = "decrement gap size for the current tag", group = "gaps"}
     ),
 
-    -- Kill all visible clients for the current tag
-    awful.key({ superkey, altkey }, "q",
-        function ()
-            local clients = awful.screen.focused().clients
-            for _, c in pairs(clients) do
-                c:kill()
-            end
-        end,
-        {description = "kill all visible clients for the current tag", group = "gaps"}
-    ),
+    -- -- Kill all visible clients for the current tag
+    -- awful.key({ superkey, altkey }, "q",
+    --     function ()
+    --         local clients = awful.screen.focused().clients
+    --         for _, c in pairs(clients) do
+    --             c:kill()
+    --         end
+    --     end,
+    --     {description = "kill all visible clients for the current tag", group = "gaps"}
+    -- ),
 
     -- Resize focused client or layout factor
     awful.key({ superkey, ctrlkey }, "Down", function (c)
@@ -202,19 +202,19 @@ keys.globalkeys = gears.table.join(
     {description = "focus the next screen", group = "screen"}),
     awful.key({ superkey }, ".", function () awful.screen.focus_relative(-1) end,
     {description = "focus the previous screen", group = "screen"}),
-    awful.key({ superkey, shiftkey }, ",", function() 
+    awful.key({ superkey, shiftkey }, ",", function()
         if client.focus then
-           client.focus:move_to_screen(1) 
+           client.focus:move_to_screen(1)
         end
     end,
     {description = "move client to next screen"}),
-    awful.key({ superkey, shiftkey }, ".", function() 
+    awful.key({ superkey, shiftkey }, ".", function()
         if client.focus then
-           client.focus:move_to_screen(-1) 
+           client.focus:move_to_screen(-1)
         end
     end,
     {description = "move client to next screen"}),
-    
+
     -- Urgent or Undo:
     -- Jump to urgent client or (if there is no such client) go back
     -- to the last tag
@@ -244,11 +244,11 @@ keys.globalkeys = gears.table.join(
         awful.spawn(user.floating_terminal, {floating = true})
                                                 end,
         {description = "spawn floating terminal", group = "launcher"}),
-    
+
     -- Spawn browser
     awful.key({ superkey, shiftkey }, "b", function () awful.spawn(user.browser) end,
         {description = "open a browser", group = "launcher"}),
-    
+
     -- Reload Awesome
     awful.key({ superkey, shiftkey }, "r", awesome.restart,
         {description = "reload awesome", group = "awesome"}),
@@ -272,45 +272,45 @@ keys.globalkeys = gears.table.join(
         {description = "quit awesome", group = "awesome"}),
 
     -- Number of master clients
-    awful.key({ superkey, altkey }, "h",   
-        function () 
-            awful.tag.incnmaster( 1, nil, true) 
+    awful.key({ superkey, altkey }, "h",
+        function ()
+            awful.tag.incnmaster( 1, nil, true)
         end,
         {description = "increase the number of master clients", group = "layout"}),
-    awful.key({ superkey, altkey }, "l",   
-        function () 
-            awful.tag.incnmaster(-1, nil, true) 
+    awful.key({ superkey, altkey }, "l",
+        function ()
+            awful.tag.incnmaster(-1, nil, true)
         end,
         {description = "decrease the number of master clients", group = "layout"}),
-    awful.key({ superkey, altkey }, "Left",   
-        function () 
-            awful.tag.incnmaster( 1, nil, true) 
+    awful.key({ superkey, altkey }, "Left",
+        function ()
+            awful.tag.incnmaster( 1, nil, true)
         end,
         {description = "increase the number of master clients", group = "layout"}),
-    awful.key({ superkey, altkey }, "Right",   
-        function () 
-            awful.tag.incnmaster(-1, nil, true) 
+    awful.key({ superkey, altkey }, "Right",
+        function ()
+            awful.tag.incnmaster(-1, nil, true)
         end,
         {description = "decrease the number of master clients", group = "layout"}),
 
     -- Number of columns
-    awful.key({ superkey, altkey }, "k",   
-        function () 
+    awful.key({ superkey, altkey }, "k",
+        function ()
             awful.tag.incncol( 1, nil, true)
         end,
         {description = "increase the number of columns", group = "layout"}),
-    awful.key({ superkey, altkey }, "j",   
-        function () 
+    awful.key({ superkey, altkey }, "j",
+        function ()
             awful.tag.incncol( -1, nil, true)
         end,
         {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ superkey, altkey }, "Up",   
-        function () 
+    awful.key({ superkey, altkey }, "Up",
+        function ()
             awful.tag.incncol( 1, nil, true)
         end,
         {description = "increase the number of columns", group = "layout"}),
-    awful.key({ superkey, altkey }, "Down",   
-        function () 
+    awful.key({ superkey, altkey }, "Down",
+        function ()
             awful.tag.incncol( -1, nil, true)
         end,
         {description = "decrease the number of columns", group = "layout"}),
@@ -335,7 +335,7 @@ keys.globalkeys = gears.table.join(
     --awful.key({ superkey },            "d",     function () awful.screen.focused().mypromptbox:run() end,
     --{description = "run prompt", group = "launcher"}),
     -- Run program (d for dmenu ;)
-    awful.key({ superkey }, "d",
+    awful.key({ superkey }, "space",
         function()
             awful.spawn.with_shell("rofi -matching fuzzy -show combi")
         end,
@@ -372,16 +372,6 @@ keys.globalkeys = gears.table.join(
     --awful.key({ superkey, ctrlkey }, "b", function() menubar.show() end,
     --{description = "show the menubar", group = "launcher"}),
 
-    awful.key( { ctrlkey, superkey }, "b",
-        function()
-            awful.spawn.with_shell("bluetoothctl connect 94:DB:56:EA:A2:5A")
-        end,
-        {description = "connect bluetooth", group = "bluetooth"}),
-    awful.key( { ctrlkey, shiftkey, superkey }, "b",
-        function()
-            awful.spawn.with_shell("bluetoothctl disconnect 94:DB:56:EA:A2:5A")
-        end,
-        {description = "disconnect bluetooth", group = "bluetooth"}),
     -- Brightness
     awful.key( { }, "XF86MonBrightnessDown",
         function()
@@ -468,7 +458,7 @@ keys.globalkeys = gears.table.join(
         {description = "next song", group = "media"}),
     awful.key({ superkey, ctrlkey }, "comma", function() awful.spawn.with_shell("playerctl -p ncspot previous") end,
         {description = "previous song", group = "media"}),
-    awful.key({ superkey }, "space", function() awful.spawn.with_shell("playerctl -p ncspot play-pause") end,
+    awful.key({ superkey, ctrlkey }, "space", function() awful.spawn.with_shell("playerctl -p ncspot play-pause") end,
         {description = "toggle pause/play", group = "media"}),
     --awful.key({ superkey, shiftkey }, "period", function() awful.spawn.with_shell("mpvc next") end,
     --    {description = "mpv next song", group = "media"}),
@@ -489,7 +479,7 @@ keys.globalkeys = gears.table.join(
                 end)
         end,
         {description = "set tiled layout", group = "tag"}),
-    
+
     awful.key({ superkey }, "a",
         function()
             awful.layout.set(awful.layout.suit.magnifier)
@@ -510,7 +500,7 @@ keys.globalkeys = gears.table.join(
         {description = "send STOP signal to all firefox processes", group = "other"}),
     awful.key({ superkey, shiftkey }, "F7", function() awful.spawn.with_shell("freeze -u firefox") end,
         {description = "send CONT signal to all firefox processes", group = "other"}),
-    awful.key({ superkey }, "q", function() apps.scratchpad() end,
+    awful.key({ superkey }, "n", function() apps.scratchpad() end,
         {description = "scratchpad", group = "launcher"}),
     -- Max layout
     -- Single tap: Set max layout
@@ -543,8 +533,7 @@ keys.globalkeys = gears.table.join(
                     end
                 end)
         end,
-        {description = "set tiled layout", group = "tag"}),
-    -- Set floating layout
+        {description = "set tiled layout", group = "tag"}), -- Set floating layout
     awful.key({ superkey, shiftkey }, "s", function()
         awful.layout.set(awful.layout.suit.floating)
                                            end,
@@ -644,7 +633,7 @@ keys.clientkeys = gears.table.join(
         helpers.move_client_dwim(c, "right")
     end),
 
-    -- Single tap: Center client 
+    -- Single tap: Center client
     -- Double tap: Center client + Floating + Resize
     awful.key({ superkey }, "c", function (c)
         awful.placement.centered(c, {honor_workarea = true, honor_padding = true})
@@ -705,6 +694,16 @@ keys.clientkeys = gears.table.join(
         end,
         {description = "toggle fullscreen", group = "client"}),
 
+    -- G for default view
+    awful.key({ superkey, ctrlkey  }, "g",
+        function (c)
+            helpers.float_and_resize(c, screen_width, screen_height)
+            local layout_is_floating = (awful.layout.get(mouse.screen) == awful.layout.suit.floating)
+            if not layout_is_floating then
+                awful.client.floating.toggle()
+            end
+        end,
+        {description = "focus mode", group = "client"}),
     -- F for focused view
     awful.key({ superkey, ctrlkey  }, "f",
         function (c)
@@ -731,7 +730,7 @@ keys.clientkeys = gears.table.join(
         {description = "normal mode", group = "client"}),
 
     -- Close client
-    awful.key({ superkey, shiftkey   }, "q",      function (c) c:kill() end,
+    awful.key({ superkey, shiftkey }, "q", function (c) c:kill() end,
         {description = "close", group = "client"}),
     awful.key({ altkey }, "F4",      function (c) c:kill() end,
         {description = "close", group = "client"}),
@@ -771,36 +770,36 @@ keys.clientkeys = gears.table.join(
         {description = "toggle sticky", group = "client"}),
 
     -- Minimize
-    awful.key({ superkey,           }, "n",
+    awful.key({ superkey,           }, "m",
         function (c)
             c.minimized = true
         end,
         {description = "minimize", group = "client"}),
 
     -- Maximize
-    awful.key({ superkey,           }, "m",
+    awful.key({ superkey, shiftkey }, "m",
         function (c)
             c.maximized = not c.maximized
         end,
-        {description = "(un)maximize", group = "client"}),
-    awful.key({ superkey, ctrlkey }, "m",
-        function()
-            awful.spawn.with_shell("xrandr --output eDP1 --off --output HDMI1 --auto && echo 'Xft.dpi: 100' | xrdb -merge")
-	    awesome.restart()
-        end,
-        {description = "(un)maximize vertically", group = "client"}),
-    awful.key({ superkey, shiftkey   }, "m",
-        function()
-            awful.spawn.with_shell("xrandr --output eDP1 --auto --output HDMI1 --off && echo 'Xft.dpi: 110' | xrdb -merge")
-	    awesome.restart()
-        end,
-        {description = "(un)maximize horizontally", group = "client"}),
-    awful.key({ superkey, ctrlkey, shiftkey }, "m",
-        function()
-            awful.spawn.with_shell("xrandr --output eDP1 --off --output HDMI1 --auto; xrandr --output eDP1 --auto --output HDMI1 --auto --left-of eDP1 --primary && echo 'Xft.dpi: 100' | xrdb -merge")
-	    awesome.restart()
-        end,
-        {description = "(un)maximize horizontally", group = "client"})
+        {description = "(un)maximize", group = "client"})
+    -- awful.key({ superkey, ctrlkey }, "m",
+    --     function()
+    --         awful.spawn.with_shell("xrandr --output eDP1 --off --output HDMI1 --auto && echo 'Xft.dpi: 100' | xrdb -merge")
+	    -- awesome.restart()
+    --     end,
+        -- {description = "(un)maximize vertically", group = "client"}),
+    -- awful.key({ superkey, shiftkey   }, "m",
+        -- function()
+        --     awful.spawn.with_shell("xrandr --output eDP1 --auto --output HDMI1 --off && echo 'Xft.dpi: 110' | xrdb -merge")
+	    -- awesome.restart()
+        -- end,
+        -- {description = "(un)maximize horizontally", group = "client"}),
+    -- awful.key({ superkey, ctrlkey, shiftkey }, "m",
+        -- function()
+        --     awful.spawn.with_shell("xrandr --output eDP1 --off --output HDMI1 --auto; xrandr --output eDP1 --auto --output HDMI1 --auto --left-of eDP1 --primary && echo 'Xft.dpi: 100' | xrdb -merge")
+	    -- awesome.restart()
+        -- end,
+        -- {description = "(un)maximize horizontally", group = "client"})
 )
 
 -- Bind all key numbers to tags.
