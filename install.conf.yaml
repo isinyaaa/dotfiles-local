@@ -6,16 +6,14 @@
 - clean: ['~', '~/.config']
 
 - link:
+    ~/.config/lemonade.toml: config/lemonade.toml
     ~/.gitconfig-common: gitconfig-common
-    ~/.gitconfig-usp: gitconfig-usp
     ~/.gitconfig-work: gitconfig-work
+    ~/.gnupg/gpg.conf: gpg.conf
+    ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/bin:
         path: bin/
     ~/vms/setup:
         path: vms-setup/
     ~/.config/kitty:
         path: config/kitty/
-    ~/.gnupg/gpg.conf:
-        path: gpg.conf
-    ~/.gnupg/gpg-agent.conf:
-        path: gpg-agent.conf

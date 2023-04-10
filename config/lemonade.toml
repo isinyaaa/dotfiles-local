@@ -1,0 +1,5 @@
+port = 1234
+allow = '100.75.132.82'
+trans-loopback = true
+trans-localfile = true
+line-ending = 'lf'
