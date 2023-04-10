@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+nvim -c "let g:DirDiffEnableMappings = 1" -c "DirDiff $*"
