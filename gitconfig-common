@@ -1,8 +1,8 @@
 [user]
-    email = isabbasso@riseup.net
-    signingKey = 53C3E78DE5553C19
+    email = isabellabdoamaral@usp.br
+    signingKey = 80887A1647C41A57
 [sendemail]
-    smtpServer = mail.riseup.net
-    smtpUser = isabbasso
+    smtpServer = smtp.gmail.com
+    smtpUser = isabellabdoamaral@usp.br
 [gpg]
     program = /opt/homebrew/bin/gpg

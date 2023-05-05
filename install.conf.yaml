@@ -7,7 +7,6 @@
 
 - link:
     ~/.gitconfig-common: gitconfig-common
-    ~/.gitconfig-usp: gitconfig-usp
     ~/.gitconfig-work: gitconfig-work
     ~/bin:
         path: bin/

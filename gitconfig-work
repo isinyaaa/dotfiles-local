@@ -1,7 +1,7 @@
 [user]
-    name = Isabella Basso do Amaral
+    name = Isabella do Amaral
     email = idoamara@redhat.com
-    signingKey = 7636065B77662E66
+    signingKey = B30EB1A3F5B9A3BB
 [sendemail]
     smtpServer = smtp.corp.redhat.com
     smtpUser = idoamara@redhat.com
