@@ -1,0 +1,46 @@
+font-family = CodeNewRoman Nerd Font Mono
+
+# turn off ligatures
+font-feature = -dlig
+
+font-thicken = true
+font-size = 16
+
+background = 262627
+foreground = f8f8f2
+
+cursor-color = f8f8f2
+
+palette = 0=#3d4c5f
+palette = 8=#56687e
+
+palette = 1=#f48fb1
+palette = 9=#ee4f84
+
+palette = 2=#a1efd3
+palette = 10=#53e2ae
+
+palette = 3=#f1fa8c
+palette = 11=#f1ff52
+
+palette = 4=#92b6f4
+palette = 12=#6498ef
+
+palette = 5=#bd99ff
+palette = 13=#985eff
+
+palette = 6=#87dfeb
+palette = 14=#24d1e7
+
+palette = 7=#f8f8f2
+palette = 15=#e5e5e5
+
+background-opacity = 0.8
+background-blur-radius = 20
+
+unfocused-split-opacity = 0.95
+
+clipboard-read = true
+copy-on-select = clipboard
+
+macos-option-as-alt = true

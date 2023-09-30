@@ -12,6 +12,8 @@
         path: bin/
     ~/vms/setup:
         path: vms-setup/
+    ~/.config/ghostty:
+        path: config/ghostty/
     ~/.config/kitty:
         path: config/kitty/
     ~/.gnupg/gpg.conf:
